@@ -1,0 +1,32 @@
+image:
+  repository: weaveworks/flux
+  tag: 1.12.0
+  pullPolicy: IfNotPresent
+  pullSecret:
+
+helmOperator:
+  create: true
+  repository: weaveworks/helm-operator
+  tag: 0.8.0
+  createCRD: false
+  allowNamespace: kube-system
+  tillerNamespace: kube-system
+  # allowNamespace: dev-zipkin
+  # tillerNamespace: dev-zipkin
+
+rbac:
+  create: false
+  
+serviceAccount:
+  create: false
+  name: sa-flux
+
+git:
+  url: "ssh://git@bitbucket.pmidce.com:2222/dce20/dce20-pmi-zipkin.git"
+  branch: "master"
+  path: "helmrelease"
+  # label: "flux-dev-zipkin"
+
+ssh:
+  known_hosts: "[bitbucket.pmidce.com]:2222 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrQe0tbtL+HKyVoclchpOg4Rfqom/ZgcBn2YzI9K0moN1g55K/QJr4+qYjlI6QKKE4DWnBSpil0JICjOOaq5A3rjBzDr2e+R8zU8ci+/Zdg8rB3U+LMu2WX6HgyXP7I+vnt8e3BBahPkfdVWi9Z1wl/gN9HfHzvHKrbYL0E3qnDcCnRTZIvKajTEc5unWYWrzv1hTEuyODGhTDFbex2xBf//kV24qoLrzW6+wAnZ1l8BCDVrFoutwRx3IpgwLy6BobxrBwEji2AAkZ5zdpKnGmDFXBD4x7R7nFZlTYduLrxs+B+qhegk0Q59RL3ZuooDD09VhQXfj4LrsefpaK5m0F"
+

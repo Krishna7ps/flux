@@ -2,57 +2,27 @@
 apiVersion: flux.weave.works/v1beta1
 kind: HelmRelease
 metadata:
-  name: zipkin-pmi
-  namespace: dev-dce20
+  name: nginx-ingress
+  namespace: kube-system
   annotations:
     flux.weave.works/automated: "true"
 spec:
-  releaseName: zipkin-dev-pmi
+  releaseName: ingress
   chart:
-    git: ssh://git@bitbucket.pmidce.com:2222/kub/private-chart-repo.git
+    git: ssh://git@
     ref: master
     path: chart
   values:
-    zipkinNodeSelector:
-      node-role.kubernetes.io/node: "true"
-    metadata:
-      namespace: dev-dce20
-    zipkin:
-      replicaCount: 1
-      imageVersion: 2.19
-      probeStartupDelay: 300
-      localQueryPort: 9410
-      queryPort: 9411
-      opt:
-        searchEnabled: "false"
-        queryEnabled: "false"
-      deployment:
-        name: zipkin-api-deployment-1
-      ingress:
-        name: zipkin-api-dce20-dev
-        host: zipkin.dev-pmidce.com
-        dns: ingress-pmirrp-nonprod-external.dev-pmidce.com
-      service:
-        name: zipkin-api-service
-    zipkin_ui:
-      localQueryPort: 9409
-      queryPort: 9411
-      ui_environment: development
-      ui_base_path: /
-      deployment:
-        name: zipkin-ui-deployment
-      ingress:
-        name: zipkin-ui-dce20-dev
-        host: zipkin-ui.dev-pmidce.com
-        dns: ingress-pmirrp-nonprod-internal.dev-pmidce.com
-      service:
-        name: zipkin-ui-service
-    elastic:
-      # All these values - Needs to be provided on launch time
-      es_index: log-dce20-zipkin-dev-
-      # elasticsearch
-      storage_type: elasticsearch
-      es_host: https://es-telemetry.dev-pmidce.com:9200
-      #es_username:
-      #es_password:
-      es_date_separator: .
+    image:
+      repository: bitnami/nginx-ingress-controller
+      tag: 0.43.0-debian-10-r15
+    resources:
+      limits:
+        cpu: 250m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+    service:
+      type: LoadBalancer
+

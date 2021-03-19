@@ -9,7 +9,7 @@ metadata:
 spec:
   releaseName: ingress
   chart:
-    git: ssh://git@
+    git: ssh://git@github.com:Krishna7ps/flux.git
     ref: master
     path: chart
   values:

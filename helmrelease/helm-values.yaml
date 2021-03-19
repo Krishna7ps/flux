@@ -11,7 +11,7 @@ spec:
   chart:
     git: ssh://git@github.com:Krishna7ps/flux.git
     ref: master
-    path: chart
+    path: Chart
   values:
     image:
       repository: bitnami/nginx-ingress-controller
